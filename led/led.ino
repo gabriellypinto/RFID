@@ -8,15 +8,15 @@
 #define L3 12   //pino de saida para acionamento da Lampada AZUL
 
 //informações da rede WIFI
-const char* ssid = "LAR";                 //SSID da rede WIFI
+const char* ssid = "LAR";              //SSID da rede WIFI
 const char* password =  "LAR@1480";    //senha da rede wifi
 
 //informações do broker MQTT - Verifique as informações geradas pelo CloudMQTT
-const char* mqttServer = "10.6.4.134";   //server
+const char* mqttServer = "10.6.4.123";  //server
 const char* mqttUser = "";              //user
-const char* mqttPassword = "";      //password
-const int mqttPort = 1883;                     //port
-const char* mqttTopicSub = "LED";           //tópico que sera assinado
+const char* mqttPassword = "";          //password
+const int mqttPort = 1883;              //port
+const char* mqttTopicSub = "LED";       //tópico que sera assinado
 
 
 WiFiClient espClient;
