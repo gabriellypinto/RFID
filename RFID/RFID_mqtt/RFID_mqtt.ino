@@ -4,9 +4,9 @@
 #include "PubSubClient.h"
 
 
-#define RST_PIN    D1
-#define SS_PIN     D2
-#define LED        D3
+#define RST_PIN    5 //GPIO05 D1
+#define SS_PIN     4 //GPIO04 D2
+#define LED        0 //GPIO00 D3
 
 #define DEBUG
 
@@ -78,8 +78,8 @@ void setup()
   Serial.println("2 - Cadastro de cartão");
   Serial.println("3 - Definir master");
   Serial.println();
-  digitalWrite(D1, HIGH);
-  pinMode(D1, OUTPUT);
+  digitalWrite(LED, HIGH);
+  pinMode(LED, OUTPUT);
 
 }
 
@@ -132,9 +132,9 @@ void callback(char* topic, byte* payload, unsigned int length) {
     {
       Serial.println("Liberado !");
       Serial.println();
-      digitalWrite(D1, LOW);     // LIGA LED OU/ ativa rele, abre trava solenoide
+      digitalWrite(LED, LOW);     // LIGA LED OU/ ativa rele, abre trava solenoide
       delay(3000);              // DELAY /espera 3 segundos
-      digitalWrite(D1, HIGH);  // DESlIGA LED OU /desativa rele, fecha  trava solenoide
+      digitalWrite(LED, HIGH);  // DESlIGA LED OU /desativa rele, fecha  trava solenoide
     }
   } else if (strMSG == "0") {   // Procura por cartao RFID
     Serial.print("Cadastro do cartao: ");
@@ -166,9 +166,9 @@ void callback(char* topic, byte* payload, unsigned int length) {
     {
       Serial.println("master definido !");
       Serial.println();
-      digitalWrite(D1, LOW);     // LIGA LED OU/ ativa rele, abre trava solenoide
+      digitalWrite(LED, LOW);     // LIGA LED OU/ ativa rele, abre trava solenoide
       delay(3000);              // DELAY /espera 3 segundos
-      digitalWrite(D1, HIGH);  // DESlIGA LED OU /desativa rele, fecha  trava solenoide
+      digitalWrite(LED, HIGH);  // DESlIGA LED OU /desativa rele, fecha  trava solenoide
     }
   }
   if (strMSG == "2") {
@@ -202,9 +202,9 @@ void callback(char* topic, byte* payload, unsigned int length) {
     {
       Serial.println("CADASTRADO !");
       Serial.println();
-      digitalWrite(D1, LOW);     // LIGA LED OU/ ativa rele, abre trava solenoide
+      digitalWrite(LED, LOW);     // LIGA LED OU/ ativa rele, abre trava solenoide
       delay(3000);              // DELAY /espera 3 segundos
-      digitalWrite(D1, HIGH);  // DESlIGA LED OU /desativa rele, fecha  trava solenoide
+      digitalWrite(LED, HIGH);  // DESlIGA LED OU /desativa rele, fecha  trava solenoide
     }
   }
 }
@@ -273,9 +273,9 @@ void loop()
 
     if (conteudo.substring(1) == "01 D1 FC 52" || "03 1C A0 F6") //UID 1 - Cartao
     {
-      digitalWrite(D1, LOW);     // LIGA LED OU/ ativa rele, abre trava solenoide
+      digitalWrite(LED, LOW);     // LIGA LED OU/ ativa rele, abre trava solenoide
       delay(3000);              // DELAY /espera 3 segundos
-      digitalWrite(D1, HIGH);  // DESlIGA LED OU /desativa rele, fecha  trava solenoide
+      digitalWrite(LED, HIGH);  // DESlIGA LED OU /desativa rele, fecha  trava solenoide
     }
   }
 
