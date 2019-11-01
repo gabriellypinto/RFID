@@ -7,8 +7,13 @@
 
 MFRC522 mfrc522(SS_PIN, RST_PIN); // Create MFRC522 instance
 
+String list[10] = {""};
+bool autorizacao = false;
+
+bool procuraID(String ID);
 uint8_t lerCartao(String &cartao);
-void adicionaCartao(String lista[]);
+void confirmaInclusao(String master, String cartao);
+void adicionaCartao(String master, String cartao);
 
 void setup() {
   Serial.begin(9600);   // Inicia a serial
@@ -22,9 +27,20 @@ void setup() {
 
 void loop() {
   String card = "";
-  String list[10] = {""};
+  String master = " D4 1D 37 A5";
   lerCartao(card);
-
+  if(card != ""){
+    adicionaCartao(master, card);
+    confirmaInclusao(master, card);
+    for (uint8_t i = 0; i < (sizeof(list) / sizeof(list[0])); i++) {
+      Serial.print("item: ");
+      Serial.print(i);
+      Serial.print(" >>");
+      Serial.print(list[i]);
+      Serial.print("a");
+      autorizacao?Serial.println("LIGADO"):Serial.println("DESLIGADO");
+    }
+  }
 }
 
 uint8_t lerCartao(String &cartao) {
@@ -46,21 +62,24 @@ uint8_t lerCartao(String &cartao) {
   cartao.toUpperCase();
 }
 
-void adicionaCartao(String lista[], String master) {
-  String comp = "";
-  while (comp != "") {
-    lerCartao(comp);
-  }
-  if (comp == master) {
-    comp = "";
-    while (comp != "") {
-      lerCartao(comp);
+bool procuraID(String ID) {
+  for (uint8_t i = 0; i < (sizeof(list) / sizeof(list[0])); i++) {
+    if (list[i] == ID) {
+      return true;
     }
-    for (uint8_t i = 0; i < sizeof(lista) / sizeof(lista[0]); i++) {
-      if (lista[i] == "") {
-        lista[i] = comp;
-        break;
-      }
+  }
+  return false;
+}
+
+void confirmaInclusao(String master, String cartao) {
+  autorizacao = (cartao == master);
+}
+
+void adicionaCartao(String master, String cartao) {
+  for (uint8_t i = 0; i < (sizeof(list) / sizeof(list[0])); i++) {
+    if (list[i] == "" && !procuraID(cartao) && autorizacao && (cartao != master)) {
+      list[i] = cartao;
+      break;
     }
   }
 }
